@@ -2,7 +2,9 @@ from Loading.load_multi_file_format import load_all_documents
 from Splitting.TextSplitter import TextSplitter
 from Splitting.RecursiveCharacterTextSplitter import RecursiveCharacterTextSplitterWrapper
 from Splitting.htmlSplitter import HTMLSplitterWrapper
-
+from Splitting.json_splitter import JSONSplitter    
+import requests
+import json 
 
 
 # Example Usage
@@ -44,3 +46,11 @@ if __name__ == "__main__":
     print(f"Example chunk preview: {html_splitter[0].page_content[:300]}")
     print("#########################################################################")
     print("\n")
+
+    print("######################## JSONSplitter ########################")
+    json_data = requests.get("https://api.smith.langchain.com/openapi.json").json()
+    chunks = JSONSplitter(json_data, chunk_size=1000, chunk_overlap=200).split_json()
+    print("Example preview:", json.dumps(json_data)[:300])
+    print(f"Total chunks created: {len(chunks)}")
+    print("#########################################################################")
+    
