@@ -2,3 +2,5 @@ langchain
 Langchain_community
 pypdf
 bs4
+langchain_core
+lxml
