@@ -1,3 +1,4 @@
 langchain
 Langchain_community
 pypdf
+bs4
