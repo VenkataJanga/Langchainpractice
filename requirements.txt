@@ -4,3 +4,7 @@ pypdf
 bs4
 langchain_core
 lxml
+sentence-transformers
+langchain-huggingface
+faiss-cpu
+langchain-ollama

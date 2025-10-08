@@ -2,7 +2,8 @@ from Loading.load_multi_file_format import load_all_documents
 from Splitting.TextSplitter import TextSplitter
 from Splitting.RecursiveCharacterTextSplitter import RecursiveCharacterTextSplitterWrapper
 from Splitting.htmlSplitter import HTMLSplitterWrapper
-from Splitting.json_splitter import JSONSplitter    
+from Splitting.json_splitter import JSONSplitter 
+from Embedding.ollama_default_model import ollamaModel
 import requests
 import json 
 
@@ -24,6 +25,14 @@ if __name__ == "__main__":
 
     # split_docs1.split_documents(documents)
 
+    print("######################## RecursiveCharacterTextSplitter ########################")
+    split_docs1 = RecursiveCharacterTextSplitterWrapper(documents, chunk_size=100, chunk_overlap=20).split_recursive_character_text_documents()
+    print(f"Total chunks created: {len(split_docs1)}")
+    print(f"Example chunk preview: {split_docs1[0].page_content[:300]}")
+    print("#########################################################################")  
+    print("\n")
+
+    '''
     print("######################## character_text_splitter ########################")
     split_docs = TextSplitter(documents, chunk_size=100, chunk_overlap=20).split_character_documents()
     print(f"Total chunks created: {len(split_docs)}")
@@ -31,13 +40,6 @@ if __name__ == "__main__":
     print("#########################################################################")
     print("\n")
 
-
-    print("######################## RecursiveCharacterTextSplitter ########################")
-    split_docs1 = RecursiveCharacterTextSplitterWrapper(documents, chunk_size=100, chunk_overlap=20).split_recursive_character_text_documents()
-    print(f"Total chunks created: {len(split_docs1)}")
-    print(f"Example chunk preview: {split_docs1[0].page_content[:300]}")
-    print("#########################################################################")  
-    print("\n")
 
     print("######################## HTMLSplitter ########################")
     url = "https://plato.stanford.edu/entries/goedel/"
@@ -53,4 +55,12 @@ if __name__ == "__main__":
     print("Example preview:", json.dumps(json_data)[:300])
     print(f"Total chunks created: {len(chunks)}")
     print("#########################################################################")
+    print("\n")
+    '''
+    print("######################Emedding#########################################")
+    emb  = ollamaModel(model="nomic-embed-text",base_url="http://127.0.0.1:11434")
+    print(emb)
+    print("######################Emedding#########################################")
+
+
     
