@@ -4,6 +4,8 @@ from Splitting.RecursiveCharacterTextSplitter import RecursiveCharacterTextSplit
 from Splitting.htmlSplitter import HTMLSplitterWrapper
 from Splitting.json_splitter import JSONSplitter 
 from Embedding.ollama_default_model import ollamaModel
+from Embedding.huggingface_embedding import huggingfcae_token,hugging_face_embedding_model
+from Embedding.open_chatgpt_embedding import open_ai_embedding,load_openai_key
 import requests
 import json 
 
@@ -57,10 +59,42 @@ if __name__ == "__main__":
     print("#########################################################################")
     print("\n")
     '''
-    print("######################Emedding#########################################")
+    print("###################### OLLAMA Emedding#########################################")
     emb  = ollamaModel(model="nomic-embed-text",base_url="http://127.0.0.1:11434")
     print(emb)
     print("######################Emedding#########################################")
+
+    print("#######################HUGGING FACE Embedding###############################")
+    huggingfcae_token()  # not needed for public models, safe to keep if you want
+    model = "sentence-transformers/all-MiniLM-L6-v2"
+    embeddings = hugging_face_embedding_model(model)
+
+    # quick sanity checks
+    #vec = embeddings.embed_query("hello world")
+
+    # after you get split_docs1 (List[Document])
+    # A) embed all chunks
+    text_chunks = [d.page_content for d in split_docs1 if d.page_content and d.page_content.strip()]
+    vecs = embeddings.embed_documents(text_chunks)
+    print("Vectors:", len(vecs), "Dim:", len(vecs[0]))
+    # B) embed a single query
+    qvec = embeddings.embed_query("When was the transformer paper published?")
+    print("Query dim:", len(qvec))
+    print("#########################OPEN CHATGPAT EMEDDING####################")
+    load_openai_key()
+    embedding_open_ai = open_ai_embedding("text-embedding-3-large")  # or "text-embedding-3-small"
+
+    # A) embed all chunks
+    text_chunks = [d.page_content for d in split_docs1 if d.page_content and d.page_content.strip()]
+    vecs_open_ai = embedding_open_ai.embed_documents(text_chunks)
+    print("Vectors:", len(vecs_open_ai), "Dim:", len(vecs_open_ai[0]))
+
+    # quick sanity checks
+    v = embedding_open_ai.embed_query("hello world")
+    print("Vector dim:", len(v))
+
+    vecs = embedding_open_ai.embed_documents(["first doc", "second doc"])
+    print("Batch size:", len(vecs))
 
 
     
