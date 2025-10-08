@@ -1,7 +1,7 @@
 # LLM via Ollama + embeddings via Sentence-Transformers (fast on CPU)
-from langchain_community.chat_models import ChatOllama
+#from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 from langchain_community.vectorstores import FAISS
-#from langchain.embeddings import HuggingFaceEmbeddings
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema import Document
@@ -30,7 +30,12 @@ emb = HuggingFaceEmbeddings(
 store = FAISS.from_documents(chunks, emb)
 
 # 4) Retrieve + answer with a small local LLM
-llm = ChatOllama(model="llama3.2:1b-instruct", temperature=0.2)
+#llm = ChatOllama(model="llama3.2:1b-instruct", temperature=0.2)
+llm = ChatOllama(
+    model="gemma3:4b",
+    base_url="http://127.0.0.1:11434",   # explicit is better
+    temperature=0.2,
+)
 query = "When was the transformer paper published?"
 
 ctx = store.similarity_search(query, k=3)
