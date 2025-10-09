@@ -9,6 +9,7 @@
 ##############################
 
 import os
+os.environ["LANGSMITH_TRACING"] = "true"
 from dotenv import load_dotenv
 
 def get_env_load():

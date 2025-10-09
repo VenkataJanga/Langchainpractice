@@ -49,6 +49,7 @@ retriever = store_db.as_retriever()
 result1 = retriever.invoke(query)
 #print(result1[0].page_content)
 
+
 #Similaty Search with scores
 #######
 #There are some FAISS specific methods. one of them is Similarity Search with score , which allows

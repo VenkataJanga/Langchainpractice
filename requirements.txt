@@ -25,3 +25,7 @@ sentence-transformers>=3.0.1
 tqdm>=4.66.4
 
 bs4
+#langchain groq
+langchain-groq
+langchain_core
+
