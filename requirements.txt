@@ -1,5 +1,5 @@
 langchain
-Langchain_community
+langchain_community
 pypdf
 bs4
 langchain_core
@@ -9,3 +9,4 @@ langchain-huggingface
 faiss-cpu
 langchain-ollama
 langchain-openai
+beautifulsoup4
